@@ -7,6 +7,7 @@ use App\Api\Url\Requests\UrlStoreRequest;
 use App\Api\Url\Resources\UrlResource;
 use Module\Url\DTO\UrlDTO;
 use Module\Url\Services\UrlShorterService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UrlController extends ApiController
 {
@@ -23,6 +24,8 @@ class UrlController extends ApiController
     {
         try {
             $urlDTO = $this->service->getUrl($hash);
+        } catch (NotFoundHttpException) {
+            return $this->respondWithNotFound();
         } catch (\Exception $e) {
             return $this->respondWithError($e->getMessage());
         }

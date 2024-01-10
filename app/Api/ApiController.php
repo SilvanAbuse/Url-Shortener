@@ -44,11 +44,14 @@ class ApiController extends Controller
         ]);
     }
 
-    public function respondWithNoData()
+    public function respondWithNotFound()
     {
        $this->setStatusCode(404);
         return $this->respond([
-            'message' => 'no data'
+            'errors' => [
+                'status' => 'error',
+                'message' => 'not found',
+            ]
         ]);
     }
 

@@ -4,14 +4,15 @@ namespace App\Web\Url\Controllers;
 
 use App\Http\Controllers\Controller;
 use Module\Url\Services\UrlShorterService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UrlController extends Controller
 {
     public function show(string $urlHash, UrlShorterService $service)
     {
-        $url = $service->getUrl($urlHash);
-
-        if(!$url) {
+        try {
+            $url = $service->getUrl($urlHash);
+        } catch (NotFoundHttpException) {
             return redirect('/');
         }
 
